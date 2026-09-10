@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRADINGPRO Ghana</title>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<style>
+body{margin:0;font-family:Arial;background:#070b18;color:#fff}
+#paywall{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at top,#1a2a5a,#070b18);padding:20px}
+.card{background:#0f1a32;border:1px solid #1e3a6a;border-radius:20px;padding:35px;max-width:440px;width:100%;text-align:center}
+input{width:100%;padding:14px;border-radius:12px;border:1px solid #2a4a7a;background:#081129;color:#fff;margin:14px 0;box-sizing:border-box;font-size:16px}
+.btn{width:100%;padding:16px;border-radius:12px;border:none;background:#00e091;color:#000;font-weight:900;font-size:18px;cursor:pointer}
+#app{display:none}
+.header{padding:15px 20px;background:#0f1a32;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e3a6a}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;padding:20px}
+.box{background:#0f1a32;border:1px solid #1e3a6a;border-radius:14px;padding:20px}
+.price{font-size:28px;font-weight:bold;color:#00e091}
+</style>
+</head>
+<body>
+<div id="paywall">
+<div class="card">
+<h1>TRADINGPRO</h1>
+<p style="color:#8aa1c2">Ghana's Premium Trading Platform</p>
+<h2 style="color:#00e091">GH₵160 Lifetime Access</h2>
+<ul style="text-align:left;color:#a0b8d8;font-size:14px">
+<li>✅ Live TradingView Charts</li>
+<li>✅ Buy/Sell Signals</li>
+<li>✅ MTN MoMo / Vodafone Cash</li>
+<li>✅ Instant Access After Payment</li>
+</ul>
+<input id="email" type="email" placeholder="Enter your email">
+<button class="btn" onclick="pay()">PAY GH₵160 - UNLOCK NOW</button>
+<p style="font-size:11px;color:#567090;margin-top:15px">🔒 Secured by Paystack | Live Key Active</p>
+</div>
+</div>
+<div id="app">
+<div class="header">
+<b>TRADINGPRO</b>
+<span style="background:#00e091;color:#000;padding:5px 12px;border-radius:20px;font-size:12px">PREMIUM ACTIVE</span>
+</div>
+<div class="grid">
+<div class="box">
+<h3>BTC/USDT</h3>
+<div class="price">$68,420</div>
+<p style="color:#00e091">+2.4% Today</p>
+<button class="btn" style="margin-top:10px;font-size:14px">BUY SIGNAL</button>
+</div>
+<div class="box">
+<h3>Live Chart</h3>
+<iframe src="https://s.tradingview.com/widgetembed/?symbol=BINANCE:BTCUSDT&interval=15&theme=dark" style="width:100%;height:300px;border:none"></iframe>
+</div>
+<div class="box">
+<h3>Your Portfolio</h3>
+<p>Customers see dashboard after paying GH₵160</p>
+</div>
+</div>
+</div>
+<script>
+function pay(){
+let email=document.getElementById('email').value;
+if(!email){alert('Enter email first');return;}
+let handler=PaystackPop.setup({
+key:'pk_live_78ae2104066f781f85aa14f62c83bedd70c15a90',
+email:email,
+amount:16000,
+currency:'GHS',
+ref:'TP_GH_'+Date.now(),
+onClose:function(){alert('Cancelled');},
+callback:function(res){
+document.getElementById('paywall').style.display='none';
+document.getElementById('app').style.display='block';
+alert('Welcome! Ref: '+res.reference);
+}
+});
+handler.openIframe();
+}
+</script>
+</body>
+</html>
