@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TRADINGPRO - Ghana's Trading School</title>
 <script src="https://js.paystack.co/v1/inline.js"></script>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <style>
 body{font-family:Arial;background:#0f0f0f;color:white;margin:0;padding:16px}
 .card{background:#1e1e1e;padding:20px;border-radius:15px;margin-bottom:15px;border:1px solid #333}
@@ -13,6 +14,7 @@ body{font-family:Arial;background:#0f0f0f;color:white;margin:0;padding:16px}
 .btn-gold{background:gold;color:#000}
 .badge{background:#00ff88;color:#000;padding:6px 12px;border-radius:20px;font-size:12px}
 .locked{opacity:0.4;pointer-events:none;filter:blur(1px)}
+#tradingview_chart{height:500px;border-radius:12px;overflow:hidden}
 small{color:#888}
 </style>
 </head>
@@ -29,32 +31,52 @@ small{color:#888}
 <p>✅ Lesson 2: Risk - 2% only</p>
 <p>✅ Lesson 3: Support & Resistance</p>
 <hr>
-<h3>📈 Market Today (FREE)</h3>
+<h3>📈 Live Chart (5000 Charts + Drawing Tools)</h3>
+<div id="tradingview_chart"></div>
+<p><small>Use drawing tools on left side: Trendline, Fib, Rectangle - all FREE during trial</small></p>
+<hr>
+<h3>Market Today (FREE)</h3>
 <p>Gold bullish above 2640 - wait retest. EURUSD ranging.</p>
 </div>
 
 <div class="card">
-<h2>🔒 VIP Signals & Drawing Tools (5000 Charts)</h2>
+<h2>🔒 VIP Signals & Mentorship</h2>
 <div id="paywall" style="display:none">
-<p>Your 6 months free finished. Subscribe to continue:</p>
+<p>Your 6 months free finished. Subscribe:</p>
 <button class="btn btn-green" onclick="pay(10000,'Monthly - GHS 100')">Monthly - GHS 100 / month</button>
 <button class="btn btn-gold" onclick="pay(100000,'Yearly - GHS 1000')">Yearly - GHS 1000 / year (Save GHS 200)</button>
-<small>Mobile Money & Card via Paystack - Secure</small>
 </div>
 <div id="vip" style="display:none">
 <h3 style="color:#00ff88">VIP UNLOCKED ✅</h3>
 <p><b>TODAY SIGNAL:</b> BUY XAUUSD @ 2650.50 | SL 2640 | TP 2675 (+250 pips)</p>
-<p><b>Tools:</b> 5000 charts unlocked - draw trendlines, fib</p>
-<p>Change signal daily in this file.</p>
+<p><b>Risk:</b> 1% only | <b>Session:</b> London</p>
+<button class="btn btn-green" onclick="window.open('https://wa.me/233XXXXXXXXX','_blank')">Join VIP WhatsApp Group</button>
+<p><small>Change signal daily in code. Change WhatsApp number in code line 45.</small></p>
 </div>
 <div id="trialPay">
-<p>Love TRADINGPRO? Lock price now & support us:</p>
+<p>Love it? Lock price now:</p>
 <button class="btn btn-green" onclick="pay(10000,'Monthly - GHS 100')">Pay GHS 100 Monthly</button>
 <button class="btn btn-gold" onclick="pay(100000,'Yearly - GHS 1000')">Pay GHS 1000 Yearly</button>
 </div>
 </div>
 
 <script>
+// TradingView Chart
+new TradingView.widget({
+  "autosize": true,
+  "symbol": "OANDA:XAUUSD",
+  "interval": "60",
+  "timezone": "Africa/Accra",
+  "theme": "dark",
+  "style": "1",
+  "locale": "en",
+  "enable_publishing": false,
+  "allow_symbol_change": true,
+  "studies": ["RSI@tv-basicstudies","MASimple@tv-basicstudies"],
+  "container_id": "tradingview_chart"
+});
+
+// Trial Logic
 const isOwner = window.location.search.includes('owner');
 const TRIAL = 180;
 let first = localStorage.getItem('tp_first');
@@ -63,7 +85,6 @@ let days = Math.floor((new Date()-new Date(first))/(1000*60*60*24));
 let left = TRIAL-days;
 let sub = localStorage.getItem('tp_sub')==='true';
 let subType = localStorage.getItem('tp_subType') || '';
-
 let info=document.getElementById('trialInfo');
 let badge=document.getElementById('planBadge');
 let paywall=document.getElementById('paywall');
@@ -72,11 +93,11 @@ let trialPay=document.getElementById('trialPay');
 let dash=document.getElementById('dash');
 
 if(isOwner){
- info.innerHTML="👑 OWNER MODE - Full access forever. Customers have "+left+" days left free.";
+ info.innerHTML="👑 OWNER MODE - Full access forever. Customers have "+left+" days left.";
  badge.innerText="OWNER - 5000 CHARTS";
  vip.style.display='block'; paywall.style.display='none'; trialPay.style.display='none';
 } else if(sub){
- info.innerHTML="✅ Premium Active ("+subType+") - Thank you!";
+ info.innerHTML="✅ Premium Active ("+subType+")";
  badge.innerText="PREMIUM - 5000 CHARTS";
  vip.style.display='block'; paywall.style.display='none'; trialPay.style.display='none'; dash.classList.remove('locked');
 } else if(left>0){
@@ -98,14 +119,13 @@ function pay(amount,name){
    amount:amount,
    currency:'GHS',
    ref:'TP_'+Math.floor(Math.random()*1000000000),
-   metadata:{custom_fields:[{display_name:"Plan",variable_name:"plan",value:name}]},
    callback:function(response){
      localStorage.setItem('tp_sub','true');
      localStorage.setItem('tp_subType',name);
-     alert('Payment SUCCESS! '+name+' unlocked! Ref: '+response.reference+' - Check Paystack dashboard');
+     alert('Payment SUCCESS! '+name+' unlocked! Ref: '+response.reference);
      location.reload();
    },
-   onClose:function(){ console.log('closed'); }
+   onClose:function(){}
  });
  handler.openIframe();
 }
