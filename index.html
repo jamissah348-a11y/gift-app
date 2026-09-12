@@ -1,6 +1,97 @@
-When user opens app first time:
-→ Save date (e.g. Sept 12, 2026)
-→ Full dashboard FREE until March 12, 2027
-→ After March 12, 2027: Dashboard locks, shows "Renew — GHS 160 for signals + GHS 50/month for tools"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRADINGPRO - Ghana</title>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<style>
+body{font-family:Arial;background:#0f0f0f;color:white;margin:0;padding:16px}
+.card{background:#1e1e1e;padding:20px;border-radius:15px;margin-bottom:15px;border:1px solid #333}
+.btn{padding:15px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;width:100%;margin-top:10px;font-size:16px}
+.btn-green{background:#00ff88;color:#000}
+.btn-gold{background:gold;color:#000}
+.badge{background:#00ff88;color:#000;padding:6px 12px;border-radius:20px;font-size:12px}
+.locked{opacity:0.4;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>TRADINGPRO 🇬🇭</h1>
+<p id="trialInfo">Loading...</p>
+<span class="badge" id="planBadge">Checking...</span>
+</div>
 
-Your owner link = Always FREE (never locks)
+<div class="card" id="dash">
+<h2>📚 Free Dashboard - 6 Months FREE</h2>
+<p>✅ Lesson 1: Why you blow account</p>
+<p>✅ Lesson 2: Risk - 2% only</p>
+<p>✅ Lesson 3: Support & Resistance</p>
+<hr>
+<h3>📈 Market Today (FREE)</h3>
+<p>Gold bullish above 2640 - wait retest</p>
+</div>
+
+<div class="card">
+<h2>🔒 VIP Signals & Tools</h2>
+<div id="paywall" style="display:none">
+<p>Your 6 months free finished. Choose plan to continue:</p>
+<button class="btn btn-green" onclick="pay(10000,'Monthly')">Monthly - GHS 100 / month</button>
+<button class="btn btn-gold" onclick="pay(100000,'Yearly')">Yearly - GHS 1000 / year (Save GHS 200)</button>
+</div>
+<div id="vip" style="display:none">
+<h3 style="color:#00ff88">VIP UNLOCKED ✅</h3>
+<p><b>SIGNAL:</b> BUY XAUUSD 2650.50 | SL 2640 | TP 2675</p>
+<p><b>Tools:</b> 5000 charts unlocked</p>
+<p>Replace this signal daily in code.</p>
+</div>
+<div id="trialPay">
+<p>Love it? Lock price now:</p>
+<button class="btn btn-green" onclick="pay(10000,'Monthly')">Pay GHS 100 Monthly</button>
+<button class="btn btn-gold" onclick="pay(100000,'Yearly')">Pay GHS 1000 Yearly</button>
+</div>
+</div>
+
+<script>
+const isOwner = window.location.search.includes('owner');
+const TRIAL = 180;
+let first = localStorage.getItem('tp_first');
+if(!first){ first=new Date().toISOString(); localStorage.setItem('tp_first',first); }
+let days = Math.floor((new Date()-new Date(first))/(1000*60*60*24));
+let left = TRIAL-days;
+let sub = localStorage.getItem('tp_sub')==='true';
+
+let info=document.getElementById('trialInfo');
+let badge=document.getElementById('planBadge');
+let paywall=document.getElementById('paywall');
+let vip=document.getElementById('vip');
+let trialPay=document.getElementById('trialPay');
+let dash=document.getElementById('dash');
+
+if(isOwner){
+ info.innerHTML="👑 OWNER - You have full access forever. Customers have "+left+" days left free.";
+ badge.innerText="OWNER - 5000 CHARTS";
+ vip.style.display='block'; paywall.style.display='none'; trialPay.style.display='none';
+} else if(sub){
+ info.innerHTML="✅ Premium Active - Thank you!";
+ badge.innerText="PREMIUM - 5000 CHARTS";
+ vip.style.display='block'; paywall.style.display='none'; trialPay.style.display='none'; dash.classList.remove('locked');
+} else if(left>0){
+ info.innerHTML="🎉 FREE TRIAL - "+left+" days left of 180 days. Full dashboard FREE until "+new Date(new Date(first).getTime()+180*24*60*60*1000).toDateString();
+ badge.innerText="FREE TRIAL - "+left+" DAYS LEFT";
+ vip.style.display='block'; paywall.style.display='none';
+} else {
+ info.innerHTML="⏰ Free trial finished. Subscribe to continue.";
+ badge.innerText="TRIAL EXPIRED";
+ dash.classList.add('locked');
+ paywall.style.display='block'; vip.style.display='none'; trialPay.style.display='none';
+}
+function pay(amount,name){
+ let key='pk_test_xxxxxxxxxxxxxxxx'; // TODO: put your real pk_live_... from Paystack dashboard here
+ if(key.includes('xxxx')){ alert('For now without Paystack key, I will unlock for testing. Add your real Paystack public key later in line 58.'); localStorage.setItem('tp_sub','true'); location.reload(); return; }
+ let h=PaystackPop.setup({key:key,email:'customer@tradingpro.com',amount:amount,currency:'GHS',ref:'TP_'+Math.random().toString(36).slice(2),callback:function(r){localStorage.setItem('tp_sub','true'); alert('Success '+r.reference); location.reload();},onClose:function(){}});
+ h.openIframe();
+}
+</script>
+</body>
+</html>
