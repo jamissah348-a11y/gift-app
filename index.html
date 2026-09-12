@@ -1,66 +1,32 @@
 import { useState } from "react";
 
-const TRADING_KNOWLEDGE = {
-  "gold": "GOLD (XAUUSD) is bullish today. Buy on dip at 2035, SL 2025, TP 2055. RSI 68, momentum strong. Don't trade during NY news 2pm.",
-  "eurusd": "EURUSD in uptrend. Support at 1.0850, resistance 1.0920. Wait for retest of 1.0860 to buy. Avoid trading USD news.",
-  "gbpusd": "GBPUSD volatile. Range 1.2700-1.2800. Better wait for breakout. Risk 1% only!",
-  "lot size": "Lot size formula: Risk Amount / (SL pips x pip value). Example: $10 risk / 20 pips = 0.05 lot. Always risk 1-2% max!",
-  "risk": "Golden rule: Risk 1% per trade. 10 losses = 10% only. If you risk 10%, 10 losses = account blown!",
-  "strategy": "Best beginner strategy: 1. Mark daily support/resistance 2. Wait for price to come to level 3. Enter with RSI confirmation 4. 1:2 RR minimum.",
-  "default": "I'm your TradingPro AI mentor! Ask me about: Gold analysis, EURUSD, lot size, risk management, or trading strategy. I will guide you like pro trader!"
-};
-
-export default function AIChat() {
-  const [messages, setMessages] = useState([
-    { role: "ai", text: TRADING_KNOWLEDGE.default }
-  ]);
-  const [input, setInput] = useState("");
-
-  const sendMessage = () => {
-    if (!input.trim()) return;
-
-    const userMsg = { role: "user", text: input };
-    const lower = input.toLowerCase();
-
-    let aiReply = TRADING_KNOWLEDGE.default;
-    for (let key in TRADING_KNOWLEDGE) {
-      if (lower.includes(key)) {
-        aiReply = TRADING_KNOWLEDGE[key];
-        break;
-      }
-    }
-
-    setMessages([...messages, userMsg, { role: "ai", text: aiReply }]);
-    setInput("");
-  };
-
-  return (
-    <div style={{ background: "#000", color: "#fff", height: "100vh", display: "flex", flexDirection: "column", padding: "20px" }}>
-      <h2 style={{ color: "#FFD700" }}>🤖 TradingPro AI Mentor</h2>
-      <div style={{ flex: 1, overflowY: "auto", margin: "20px 0" }}>
-        {messages.map((m, i) => (
-          <div key={i} style={{
-            background: m.role === "ai"? "#111" : "#FFD700",
-            color: m.role === "ai"? "#fff" : "#000",
-            padding: "12px", borderRadius: "12px", margin: "8px 0",
-            alignSelf: m.role === "ai"? "flex-start" : "flex-end"
-          }}>
-            {m.text}
-          </div>
-        ))}
-      </div>
-      <div style={{ display: "flex", gap: "10px" }}>
-        <input
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyPress={e => e.key === "Enter" && sendMessage()}
-          placeholder="Ask: Should I buy Gold? What is lot size?"
-          style={{ flex: 1, padding: "15px", borderRadius: "10px", background: "#222", color: "#fff", border: "1px solid #333" }}
-        />
-        <button onClick={sendMessage} style={{ background: "#FFD700", color: "#000", padding: "15px 25px", borderRadius: "10px", fontWeight: "bold", border: "none" }}>
-          Send
-        </button>
-      </div>
-    </div>
-  );
+export default function AIChat(){
+ const [chats,setChats]=useState([{from:"ai",text:"Hi boss! I'm your TradingPro AI. Ask me about Gold, EURUSD, lot size, strategy?"}]);
+ const [input,setInput]=useState("");
+ const reply=(q)=>{
+  const l=q.toLowerCase();
+  if(l.includes("gold")) return "GOLD 🔥 BUY at 2035, SL 2025, TP 2060. Bullish today!";
+  if(l.includes("eur")) return "EURUSD 📈 Buy at 1.0860, SL 1.0830, TP 1.0920";
+  if(l.includes("lot")) return "Lot size = $Risk / (SL pips x 10). Example $10 risk /20 pips=0.05 lot. Risk 1% only!";
+  if(l.includes("risk")) return "Risk 1% per trade! 10 losses = -10% only. Don't blow account!";
+  return "Ask me: Gold, EURUSD, GBPUSD, BTC, lot size, risk, strategy — I answer like pro trader!";
+ };
+ const send=()=>{
+  if(!input)return;
+  const r=reply(input);
+  setChats([...chats,{from:"user",text:input},{from:"ai",text:r}]);
+  setInput("");
+ };
+ return (
+  <div style={{background:"#000",minHeight:"100vh",padding:20,color:"#fff"}}>
+   <h2 style={{color:"gold"}}>🤖 AI Trading Mentor</h2>
+   <div style={{height:"70vh",overflowY:"auto",background:"#111",padding:15,borderRadius:10}}>
+    {chats.map((c,i)=><div key={i} style={{background:c.from==="ai"?"#222":"gold",color:c.from==="ai"?"#fff":"#000",padding:10,margin:8,borderRadius:10}}>{c.text}</div>)}
+   </div>
+   <div style={{display:"flex",gap:10,marginTop:15}}>
+    <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask AI anything..." style={{flex:1,padding:15,borderRadius:10,background:"#222",color:"#fff",border:"1px solid #444"}}/>
+    <button onClick={send} style={{background:"gold",padding:"15px 20px",borderRadius:10,fontWeight:"bold"}}>Send</button>
+   </div>
+  </div>
+ );
 }
