@@ -3,132 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRADINGPRO - Ghana's Trading School</title>
+<title>TRADINGPRO - Ghana AI Journal</title>
 <script src="https://js.paystack.co/v1/inline.js"></script>
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script src="https://s3.tradingview.com/tv.js"></script>
 <style>
 body{font-family:Arial;background:#0f0f0f;color:white;margin:0;padding:16px}
-.card{background:#1e1e1e;padding:20px;border-radius:15px;margin-bottom:15px;border:1px solid #333}
-.btn{padding:15px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;width:100%;margin-top:10px;font-size:16px}
-.btn-green{background:#00ff88;color:#000}
-.btn-gold{background:gold;color:#000}
+.card{background:#1e1e1e;padding:18px;border-radius:15px;margin-bottom:15px;border:1px solid #333}
+.btn{padding:13px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;width:100%;margin-top:8px;font-size:15px}
+.btn-green{background:#00ff88;color:#000}.btn-gold{background:gold;color:#000}.btn-dark{background:#333;color:#fff}
 .badge{background:#00ff88;color:#000;padding:6px 12px;border-radius:20px;font-size:12px}
+input,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #333;background:#111;color:#fff;box-sizing:border-box}
+#tradingview_chart{height:450px;border-radius:12px;overflow:hidden}
+table{width:100%;font-size:12px;border-collapse:collapse;margin-top:10px}
+th,td{padding:8px;border-bottom:1px solid #333;text-align:left}
+.win{color:#00ff88}.loss{color:#ff4444}
 .locked{opacity:0.4;pointer-events:none;filter:blur(1px)}
-#tradingview_chart{height:500px;border-radius:12px;overflow:hidden}
-small{color:#888}
 </style>
 </head>
 <body>
 <div class="card">
-<h1>TRADINGPRO 🇬🇭</h1>
+<h1>TRADINGPRO 🇬🇭 AI</h1>
 <p id="trialInfo">Loading...</p>
 <span class="badge" id="planBadge">Checking...</span>
+<p id="countdown" style="color:gold;font-weight:bold;margin-top:10px"></p>
 </div>
 
 <div class="card" id="dash">
-<h2>📚 Free Dashboard - 6 Months FREE</h2>
-<p>✅ Lesson 1: Why you blow account - Greed</p>
-<p>✅ Lesson 2: Risk - 2% only</p>
+<h2>📚 Lessons (FREE 6 Months)</h2>
+<p>✅ Lesson 1: Why you blow account</p>
+<p>✅ Lesson 2: Risk 2% only</p>
 <p>✅ Lesson 3: Support & Resistance</p>
 <hr>
-<h3>📈 Live Chart (5000 Charts + Drawing Tools)</h3>
+<h3>📈 Live Chart (5000 Charts)</h3>
 <div id="tradingview_chart"></div>
-<p><small>Use drawing tools on left side: Trendline, Fib, Rectangle - all FREE during trial</small></p>
-<hr>
-<h3>Market Today (FREE)</h3>
-<p>Gold bullish above 2640 - wait retest. EURUSD ranging.</p>
 </div>
 
 <div class="card">
-<h2>🔒 VIP Signals & Mentorship</h2>
+<h2>🤖 AI Trading Journal - Your AI Coach</h2>
+<div id="aiCoach" style="background:#111;padding:12px;border-radius:10px;border-left:4px solid #00ff88;margin-bottom:12px">
+<b>AI COACH:</b> <span id="coachText">Add 2 trades to get AI analysis...</span>
+</div>
+
+<div style="display:flex;gap:8px">
+<div style="flex:1;background:#111;padding:10px;border-radius:10px;text-align:center"><b id="winRate">0%</b><br><small>Win Rate</small></div>
+<div style="flex:1;background:#111;padding:10px;border-radius:10px;text-align:center"><b id="totalTrades">0</b><br><small>Trades</small></div>
+<div style="flex:1;background:#111;padding:10px;border-radius:10px;text-align:center"><b id="avgRR">0</b><br><small>Avg RR</small></div>
+</div>
+
+<hr>
+<h4>Add New Trade</h4>
+<select id="j_pair"><option>XAUUSD</option><option>EURUSD</option><option>GBPUSD</option><option>BTCUSD</option><option>NAS100</option></select>
+<select id="j_side"><option>BUY</option><option>SELL</option></select>
+<input id="j_entry" type="number" placeholder="Entry e.g 2650.50">
+<input id="j_sl" type="number" placeholder="SL e.g 2640">
+<input id="j_tp" type="number" placeholder="TP e.g 2675">
+<select id="j_result"><option value="WIN">WIN ✅</option><option value="LOSS">LOSS ❌</option><option value="PENDING">PENDING ⏳</option></select>
+<input id="j_note" placeholder="Note: e.g FOMO, good setup">
+<button class="btn btn-green" onclick="addTrade()">Save Trade + AI Analyze</button>
+<button class="btn btn-dark" onclick="clearJournal()">Clear Journal</button>
+
+<div style="overflow:auto;max-height:300px">
+<table id="journalTable"><thead><tr><th>Date</th><th>Pair</th><th>RR</th><th>Result</th><th>Note</th></tr></thead><tbody id="j_body"></tbody></table>
+</div>
+</div>
+
+<div class="card">
+<h2>🔒 VIP Signals</h2>
 <div id="paywall" style="display:none">
-<p>Your 6 months free finished. Subscribe:</p>
-<button class="btn btn-green" onclick="pay(10000,'Monthly - GHS 100')">Monthly - GHS 100 / month</button>
-<button class="btn btn-gold" onclick="pay(100000,'Yearly - GHS 1000')">Yearly - GHS 1000 / year (Save GHS 200)</button>
+<p>Free trial finished. Subscribe:</p>
+<button class="btn btn-green" onclick="pay(10000,'Monthly')">Monthly GHS 100</button>
+<button class="btn btn-gold" onclick="pay(100000,'Yearly')">Yearly GHS 1000</button>
 </div>
 <div id="vip" style="display:none">
 <h3 style="color:#00ff88">VIP UNLOCKED ✅</h3>
-<p><b>TODAY SIGNAL:</b> BUY XAUUSD @ 2650.50 | SL 2640 | TP 2675 (+250 pips)</p>
-<p><b>Risk:</b> 1% only | <b>Session:</b> London</p>
-<button class="btn btn-green" onclick="window.open('https://wa.me/233XXXXXXXXX','_blank')">Join VIP WhatsApp Group</button>
-<p><small>Change signal daily in code. Change WhatsApp number in code line 45.</small></p>
+<p><b>SIGNAL:</b> BUY XAUUSD 2650.50 | SL 2640 | TP 2675</p>
+<button class="btn btn-green" onclick="window.open('https://wa.me/233XXXXXXXXX','_blank')">Join VIP WhatsApp</button>
 </div>
 <div id="trialPay">
-<p>Love it? Lock price now:</p>
-<button class="btn btn-green" onclick="pay(10000,'Monthly - GHS 100')">Pay GHS 100 Monthly</button>
-<button class="btn btn-gold" onclick="pay(100000,'Yearly - GHS 1000')">Pay GHS 1000 Yearly</button>
+<button class="btn btn-green" onclick="pay(10000,'Monthly')">Lock GHS 100 Monthly</button>
+<button class="btn btn-gold" onclick="pay(100000,'Yearly')">Lock GHS 1000 Yearly</button>
 </div>
 </div>
 
 <script>
-// TradingView Chart
-new TradingView.widget({
-  "autosize": true,
-  "symbol": "OANDA:XAUUSD",
-  "interval": "60",
-  "timezone": "Africa/Accra",
-  "theme": "dark",
-  "style": "1",
-  "locale": "en",
-  "enable_publishing": false,
-  "allow_symbol_change": true,
-  "studies": ["RSI@tv-basicstudies","MASimple@tv-basicstudies"],
-  "container_id": "tradingview_chart"
-});
+// Chart
+new TradingView.widget({"autosize":true,"symbol":"OANDA:XAUUSD","interval":"60","timezone":"Africa/Accra","theme":"dark","style":"1","locale":"en","allow_symbol_change":true,"container_id":"tradingview_chart"});
 
-// Trial Logic
+// Trial + Countdown
 const isOwner = window.location.search.includes('owner');
-const TRIAL = 180;
-let first = localStorage.getItem('tp_first');
-if(!first){ first=new Date().toISOString(); localStorage.setItem('tp_first',first); }
-let days = Math.floor((new Date()-new Date(first))/(1000*60*60*24));
-let left = TRIAL-days;
-let sub = localStorage.getItem('tp_sub')==='true';
-let subType = localStorage.getItem('tp_subType') || '';
-let info=document.getElementById('trialInfo');
-let badge=document.getElementById('planBadge');
-let paywall=document.getElementById('paywall');
-let vip=document.getElementById('vip');
-let trialPay=document.getElementById('trialPay');
-let dash=document.getElementById('dash');
+const TRIAL=180;
+let first=localStorage.getItem('tp_first'); if(!first){first=new Date().toISOString(); localStorage.setItem('tp_first',first);}
+let days=Math.floor((new Date()-new Date(first))/(1000*60*60*24)); let left=TRIAL-days;
+let sub=localStorage.getItem('tp_sub')==='true';
+let info=document.getElementById('trialInfo'), badge=document.getElementById('planBadge'), paywall=document.getElementById('paywall'), vip=document.getElementById('vip'), trialPay=document.getElementById('trialPay'), dash=document.getElementById('dash'), cd=document.getElementById('countdown');
+function updateCountdown(){
+ let end=new Date(new Date(first).getTime()+TRIAL*24*60*60*1000); let now=new Date(); let diff=end-now;
+ if(diff>0){ let d=Math.floor(diff/(1000*60*60*24)), h=Math.floor((diff%(1000*60*60*24))/(1000*60*60)); cd.innerText="⏰ Free trial ends in "+d+" days "+h+" hours - Lock price now!"; } else cd.innerText="Trial finished";
+} setInterval(updateCountdown,60000); updateCountdown();
+if(isOwner){info.innerHTML="👑 OWNER - Full forever. Customers "+left+" days left"; badge.innerText="OWNER"; vip.style.display='block'; paywall.style.display='none'; trialPay.style.display='none';}
+else if(sub){info.innerHTML="✅ Premium Active"; badge.innerText="PREMIUM"; vip.style.display='block'; paywall.style.display='none'; trialPay.style.display='none';}
+else if(left>0){info.innerHTML="🎉 FREE TRIAL - "+left+" days left of 180"; badge.innerText="FREE TRIAL "+left+"D LEFT"; vip.style.display='block'; paywall.style.display='none';}
+else{info.innerHTML="⏰ Trial finished"; badge.innerText="EXPIRED"; dash.classList.add('locked'); paywall.style.display='block'; vip.style.display='none'; trialPay.style.display='none';}
+function pay(amount,name){let key='pk_live_78ae2104066f781f85aa14f62c83bedd70c15a90'; let h=PaystackPop.setup({key:key,email:'customer@tradingpro.com.gh',amount:amount,currency:'GHS',ref:'TP_'+Math.floor(Math.random()*1000000000),callback:function(r){localStorage.setItem('tp_sub','true'); alert('SUCCESS '+r.reference); location.reload();},onClose:function(){}}); h.openIframe();}
 
-if(isOwner){
- info.innerHTML="👑 OWNER MODE - Full access forever. Customers have "+left+" days left.";
- badge.innerText="OWNER - 5000 CHARTS";
- vip.style.display='block'; paywall.style.display='none'; trialPay.style.display='none';
-} else if(sub){
- info.innerHTML="✅ Premium Active ("+subType+")";
- badge.innerText="PREMIUM - 5000 CHARTS";
- vip.style.display='block'; paywall.style.display='none'; trialPay.style.display='none'; dash.classList.remove('locked');
-} else if(left>0){
- let endDate = new Date(new Date(first).getTime()+180*24*60*60*1000).toDateString();
- info.innerHTML="🎉 FREE TRIAL - "+left+" days left of 180 days. Full FREE until "+endDate;
- badge.innerText="FREE TRIAL - "+left+" DAYS LEFT";
- vip.style.display='block'; paywall.style.display='none';
-} else {
- info.innerHTML="⏰ Free trial finished. Subscribe to continue.";
- badge.innerText="TRIAL EXPIRED";
- dash.classList.add('locked');
- paywall.style.display='block'; vip.style.display='none'; trialPay.style.display='none';
+// AI JOURNAL LOGIC
+let trades=JSON.parse(localStorage.getItem('tp_journal')||'[]');
+function addTrade(){
+ let pair=document.getElementById('j_pair').value, side=document.getElementById('j_side').value, entry=parseFloat(document.getElementById('j_entry').value), sl=parseFloat(document.getElementById('j_sl').value), tp=parseFloat(document.getElementById('j_tp').value), result=document.getElementById('j_result').value, note=document.getElementById('j_note').value;
+ if(!entry||!sl||!tp){alert('Enter Entry, SL, TP'); return;}
+ let risk=Math.abs(entry-sl), reward=Math.abs(tp-entry); let rr=reward/risk; rr=rr.toFixed(2);
+ let trade={date:new Date().toLocaleDateString(), pair, side, entry, sl, tp, rr, result, note};
+ trades.push(trade); localStorage.setItem('tp_journal',JSON.stringify(trades)); renderJournal(); document.getElementById('j_entry').value=''; document.getElementById('j_note').value='';
 }
-function pay(amount,name){
- let key='pk_live_78ae2104066f781f85aa14f62c83bedd70c15a90';
- let handler = PaystackPop.setup({
-   key:key,
-   email:'customer@tradingpro.com.gh',
-   amount:amount,
-   currency:'GHS',
-   ref:'TP_'+Math.floor(Math.random()*1000000000),
-   callback:function(response){
-     localStorage.setItem('tp_sub','true');
-     localStorage.setItem('tp_subType',name);
-     alert('Payment SUCCESS! '+name+' unlocked! Ref: '+response.reference);
-     location.reload();
-   },
-   onClose:function(){}
+function renderJournal(){
+ let body=document.getElementById('j_body'); body.innerHTML=''; let wins=0, totalRR=0, count=0;
+ trades.slice().reverse().forEach(t=>{
+   let cls=t.result==='WIN'?'win':t.result==='LOSS'?'loss':'';
+   body.innerHTML+='<tr><td>'+t.date+'</td><td>'+t.pair+' '+t.side+'</td><td>'+t.rr+'</td><td class='+cls+'>'+t.result+'</td><td>'+(t.note||'')+'</td></tr>';
+   if(t.result!=='PENDING'){count++; totalRR+=parseFloat(t.rr); if(t.result==='WIN') wins++;}
  });
- handler.openIframe();
+ let winRate=count?Math.round((wins/count)*100):0; document.getElementById('winRate').innerText=winRate+'%'; document.getElementById('totalTrades').innerText=count; document.getElementById('avgRR').innerText=count?(totalRR/count).toFixed(2):0;
+ // AI COACH
+ let coach=document.getElementById('coachText');
+ if(count<2){coach.innerText='Add more trades — AI needs at least 2 closed trades to analyze you.';}
+ else if(winRate<40){coach.innerText='🚨 AI: Win rate low ('+winRate+'%). You are overtrading. Focus on Support & Resistance only, wait for retest! Risk 1% max.';}
+ else if(winRate>=40&&winRate<60){coach.innerText='⚠️ AI: You are average ('+winRate+'%). Good but you cut winners early. Let TP hit! Your Avg RR is '+(totalRR/count).toFixed(2)+'. Aim RR 1:2 minimum.';}
+ else if(winRate>=60){coach.innerText='🔥 AI: Excellent discipline! '+winRate+'% win rate! Keep journaling. You are ready for funded account. Stay consistent, no revenge.';}
+ else{coach.innerText='AI analyzing '+count+' trades... Keep journaling daily.';}
 }
+function clearJournal(){if(confirm('Delete all journal?')){trades=[]; localStorage.removeItem('tp_journal'); renderJournal();}}
+renderJournal();
 </script>
 </body>
 </html>
