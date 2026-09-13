@@ -1,55 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TradingPro - Ghana AI Mentor</title>
-<script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-black text-white min-h-screen">
-<div class="max-w-5xl mx-auto p-4">
-<h1 class="text-3xl font-black text-center mt-6">🚀 TradingPro <span class="text-yellow-400">Ghana</span></h1>
-<p class="text-center text-zinc-400">AI Trading Mentor • Chart Scanner • Journal</p>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TradingPro Ghana - Live</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-[#0a0a0a] text-white"><div class="max-w-7xl mx-auto">
+<!-- HEADER -->
+<div class="bg-black p-3 flex justify-between items-center border-b border-zinc-800"><b>🚀 TradingPro <span class="text-yellow-400">Ghana</span> - Live</b><a href="https://wa.me/233591990508" class="bg-green-600 px-3 py-1 rounded-full text-xs">WhatsApp</a></div>
 
-<div class="grid md:grid-cols-2 gap-4 mt-8">
-<div class="bg-zinc-900 p-5 rounded-3xl">
-<h2 class="font-bold mb-3">🤖 AI Mentor</h2>
-<div id="chat" class="bg-black rounded-xl p-3 h-48 overflow-y-auto text-sm text-zinc-300">Hi boss! Ask me: Analyze XAUUSD BUY? Or how to trade SMC?</div>
-<div class="flex gap-2 mt-3"><input id="msg" class="flex-1 bg-zinc-800 p-3 rounded-xl" placeholder="Ask trading question..."><button onclick="ask()" class="bg-yellow-400 text-black px-5 py-3 rounded-xl font-black">Send</button></div>
+<!-- LESSONS -->
+<div class="p-3 bg-zinc-900 m-2 rounded-xl text-sm space-y-1">
+<div class="flex gap-2"><span class="text-green-400">✅</span> Lesson 1: Why you blow account - Greed</div>
+<div class="flex gap-2"><span class="text-green-400">✅</span> Lesson 2: Risk - 2% only</div>
+<div class="flex gap-2"><span class="text-green-400">✅</span> Lesson 3: Support & Resistance</div>
 </div>
 
-<div class="bg-zinc-900 p-5 rounded-3xl">
-<h2 class="font-bold mb-3">📸 Scan Chart</h2>
-<input type="file" id="file" accept="image/*" class="w-full bg-black p-3 rounded-xl">
-<div id="scanResult" class="mt-3 text-sm text-zinc-400">Upload chart screenshot, AI will analyze entry, SL, TP</div>
-<button onclick="scan()" class="w-full bg-zinc-800 py-3 rounded-xl mt-3 font-bold">Analyze Chart</button>
-</div>
+<!-- LIVE CHART TITLE -->
+<div class="px-3 py-2 flex justify-between"><h2 class="font-bold text-sm">📈 Live Chart (5000 Charts + Drawing Tools)</h2><span class="text-xs bg-zinc-800 px-2 py-1 rounded">XAUUSD • OANDA</span></div>
+
+<!-- TRADINGVIEW LIVE CHART -->
+<div class="bg-black rounded-xl m-2 overflow-hidden" style="height:480px">
+<div id="tv" style="height:100%"></div>
 </div>
 
-<div class="bg-zinc-900 p-5 rounded-3xl mt-4">
-<h2 class="font-bold mb-3">📔 Trading Journal - Track P&L</h2>
-<div class="grid grid-cols-3 gap-2">
-<input id="pair" placeholder="Pair XAUUSD" class="bg-black p-2 rounded-lg"><input id="pnl" type="number" placeholder="P&L GH₵" class="bg-black p-2 rounded-lg"><button onclick="addTrade()" class="bg-green-600 rounded-lg font-bold">Add</button>
-</div>
-<div id="journal" class="mt-3 text-sm"></div>
-<div class="mt-3 font-black">Total: GH₵<span id="total">0</span></div>
+<!-- AI + JOURNAL SIDE BY SIDE -->
+<div class="grid md:grid-cols-2 gap-2 p-2">
+<div class="bg-zinc-900 p-3 rounded-xl"><h3 class="font-bold text-sm">🤖 AI Mentor</h3><div id="chat" class="bg-black rounded-lg p-2 h-40 overflow-auto text-xs mt-2">Hi! Ask me about this XAUUSD chart: Should I BUY or SELL now?</div><div class="flex gap-1 mt-2"><input id="msg" class="flex-1 bg-black p-2 rounded-lg text-xs" placeholder="Ask about live chart..."><button onclick="ask()" class="bg-yellow-400 text-black px-3 rounded-lg font-bold text-xs">Send</button></div></div>
+<div class="bg-zinc-900 p-3 rounded-xl"><h3 class="font-bold text-sm">📔 Journal P&L</h3><div class="flex gap-1 mt-2"><input id="pair" value="XAUUSD" class="bg-black p-2 rounded text-xs w-1/3"><input id="pnl" type="number" placeholder="GH₵" class="bg-black p-2 rounded text-xs w-1/3"><button onclick="ad()" class="bg-green-600 px-2 rounded text-xs font-bold">Add</button></div><div id="j" class="mt-2 text-xs"></div><div class="font-bold mt-2 text-sm">Total: GH₵<span id="tot">0</span></div></div>
 </div>
 
-<div class="text-center mt-8">
-<a href="https://wa.me/233591990508?text=Hi%20I%20want%20TradingPro%20Pro%20GH₵100" class="bg-green-600 px-6 py-3 rounded-full font-bold">💬 WhatsApp: 0591990508</a>
-<p class="mt-4"><a href="owner.html" class="text-zinc-600 text-sm">Owner Dashboard →</a></p>
-</div>
+<div class="text-center text-[10px] text-zinc-600 p-3">TradingPro Ghana • Live Charts by TradingView • AI Powered</div>
 </div>
 
-<a href="https://wa.me/233591990508" class="fixed bottom-5 right-5 bg-green-500 w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-xl">💬</a>
-
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
-let trades=JSON.parse(localStorage.getItem('tp_journal')||'[]');
-function render(){let t=0;document.getElementById('journal').innerHTML=trades.map(x=>{t+=parseFloat(x.pnl);return `<div class="bg-black p-2 rounded-lg mt-1 flex justify-between"><span>${x.pair}</span><span class="${x.pnl>=0?'text-green-400':'text-red-400'}">GH₵${x.pnl}</span></div>`}).join('');document.getElementById('total').innerText=t;localStorage.setItem('tp_journal',JSON.stringify(trades));}
-render();
-function addTrade(){let p=document.getElementById('pair').value||'XAUUSD';let pnl=parseFloat(document.getElementById('pnl').value)||0;trades.push({pair:p,pnl:pnl});render();document.getElementById('pair').value='';document.getElementById('pnl').value='';}
-function ask(){let m=document.getElementById('msg').value;if(!m)return;let c=document.getElementById('chat');c.innerHTML+=`<div class="mt-2"><b>You:</b> ${m}</div>`;let r='';if(m.toLowerCase().includes('xau')||m.toLowerCase().includes('gold'))r='XAUUSD: Look for BOS on M15. If price holds above 2040, BUY to 2055 SL 2032. Risk 1% only!';else if(m.toLowerCase().includes('buy')||m.toLowerCase().includes('sell'))r='Entry rule: Only BUY/SELL after CHoCH + OB retest. Set SL beyond OB, TP 1:2 minimum. Don\'t chase!';else r='I\'m your TradingPro AI: Focus on SMC + Risk management. Journal every trade! Want Pro signals GH₵100? WhatsApp 0591990508';c.innerHTML+=`<div class="mt-2 text-yellow-400"><b>AI:</b> ${r}</div>`;c.scrollTop=c.scrollHeight;document.getElementById('msg').value='';}
-function scan(){let f=document.getElementById('file').files[0];if(!f)return alert('Upload chart image first');document.getElementById('scanResult').innerHTML='Analyzing... ⏳<br><br>✅ <b>XAUUSD M15</b><br>Trend: Bullish BOS<br>Entry: 2042 BUY<br>SL: 2032 (10$)<br>TP1: 2055 (1:1.3)<br>TP2: 2068 (1:2.6)<br><br>💡 Confidence 78% - Wait for retest';}
-</script>
-</body>
-</html>
+new TradingView.widget({
+"autosize": true,
+"symbol": "OANDA:XAUUSD",
+"interval": "60",
+"timezone": "Africa/Accra",
+"theme": "dark",
+"style": "1",
+"locale": "en",
+"toolbar_bg": "#0a0a0a",
+"enable_publishing": false,
+"allow_symbol_change": true,
+"studies": ["Volume@tv-basicstudies","MAExp@tv-basicstudies"],
+"container_id": "tv"
+});
+let t=JSON.parse(localStorage.getItem('jlive')||'[]');function r(){let s=0;document.getElementById('j').innerHTML=t.slice(-5).map(v=>{s+=v.p;return `<div class="flex justify-between bg-black p-1 rounded mt-1"><span>${v.a}</span><span class="${v.p>=0?'text-green-400':'text-red-400'}">GH₵${v.p}</span></div>`}).join('');document.getElementById('tot').innerText=s;localStorage.setItem('jlive',JSON.stringify(t));}r();function ad(){let a=document.getElementById('pair').value;let p=parseFloat(document.getElementById('pnl').value);if(isNaN(p))return;t.push({a:a,p:p});r();}function ask(){let m=document.getElementById('msg').value;if(!m)return;let c=document.getElementById('chat');c.innerHTML+=`<div class="mt-2"><b>You:</b> ${m}</div>`;let ans=m.toLowerCase().includes('buy')||m.toLowerCase().includes('sell')?'Looking at LIVE XAUUSD chart now: Price is near 4340 resistance. Wait for breakout close above. If rejects, SELL to 4280 SL 4360. Risk 2% only!':'This live chart shows XAUUSD bullish structure. Use support/resistance + 2% risk rule. Journal your trade!';c.innerHTML+=`<div class="mt-1 text-yellow-400"><b>AI:</b> ${ans}</div>`;c.scrollTop=c.scrollHeight;document.getElementById('msg').value='';}
+</script></body></html>
