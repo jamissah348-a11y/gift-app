@@ -1,47 +1,84 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TradingPro Ghana - Live</title><script src="https://cdn.tailwindcss.com"></script></head>
-<body class="bg-[#0a0a0a] text-white"><div class="max-w-7xl mx-auto">
-<!-- HEADER -->
-<div class="bg-black p-3 flex justify-between items-center border-b border-zinc-800"><b>🚀 TradingPro <span class="text-yellow-400">Ghana</span> - Live</b><a href="https://wa.me/233591990508" class="bg-green-600 px-3 py-1 rounded-full text-xs">WhatsApp</a></div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradingPro Ghana - Live</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+</head>
+<body class="bg-[#0a0a0a] text-white">
+<div class="max-w-7xl mx-auto">
+
+<!-- HEADER WITH DIAMOND LOGO -->
+<div class="bg-black p-3 flex justify-between items-center border-b border-yellow-500/20 sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<img src="logo.png" class="h-9 w-9 rounded-lg border border-yellow-500/30 bg-black">
+<b class="text-[16px] tracking-wide">💎 Trading<span class="text-yellow-400">Pro</span> <span class="text-[10px] text-zinc-400 font-normal ml-1">GHANA</span></b>
+</div>
+<a href="https://wa.me/233591990508?text=I%20want%20VIP%20TradingPro" class="bg-yellow-500 hover:bg-yellow-400 text-black px-4 py-1.5 rounded-full text-xs font-bold">Join VIP</a>
+</div>
 
 <!-- LESSONS -->
 <div class="p-3 bg-zinc-900 m-2 rounded-xl text-sm space-y-1">
 <div class="flex gap-2"><span class="text-green-400">✅</span> Lesson 1: Why you blow account - Greed</div>
-<div class="flex gap-2"><span class="text-green-400">✅</span> Lesson 2: Risk - 2% only</div>
+<div class="flex gap-2"><span class="text-green-400">✅</span> Lesson 2: Risk 2% only</div>
 <div class="flex gap-2"><span class="text-green-400">✅</span> Lesson 3: Support & Resistance</div>
 </div>
 
 <!-- LIVE CHART TITLE -->
-<div class="px-3 py-2 flex justify-between"><h2 class="font-bold text-sm">📈 Live Chart (5000 Charts + Drawing Tools)</h2><span class="text-xs bg-zinc-800 px-2 py-1 rounded">XAUUSD • OANDA</span></div>
+<div class="px-3 py-2 flex justify-between items-center">
+<h2 class="font-bold text-sm">📈 Live Chart (5000 Charts + Drawing Tools)</h2>
+<span class="text-[10px] bg-green-600 px-2 py-0.5 rounded">LIVE</span>
+</div>
 
 <!-- TRADINGVIEW LIVE CHART -->
 <div class="bg-black rounded-xl m-2 overflow-hidden" style="height:480px">
 <div id="tv" style="height:100%"></div>
 </div>
 
-<!-- AI + JOURNAL SIDE BY SIDE -->
+<!-- AI + JOURNAL -->
 <div class="grid md:grid-cols-2 gap-2 p-2">
-<div class="bg-zinc-900 p-3 rounded-xl"><h3 class="font-bold text-sm">🤖 AI Mentor</h3><div id="chat" class="bg-black rounded-lg p-2 h-40 overflow-auto text-xs mt-2">Hi! Ask me about this XAUUSD chart: Should I BUY or SELL now?</div><div class="flex gap-1 mt-2"><input id="msg" class="flex-1 bg-black p-2 rounded-lg text-xs" placeholder="Ask about live chart..."><button onclick="ask()" class="bg-yellow-400 text-black px-3 rounded-lg font-bold text-xs">Send</button></div></div>
-<div class="bg-zinc-900 p-3 rounded-xl"><h3 class="font-bold text-sm">📔 Journal P&L</h3><div class="flex gap-1 mt-2"><input id="pair" value="XAUUSD" class="bg-black p-2 rounded text-xs w-1/3"><input id="pnl" type="number" placeholder="GH₵" class="bg-black p-2 rounded text-xs w-1/3"><button onclick="ad()" class="bg-green-600 px-2 rounded text-xs font-bold">Add</button></div><div id="j" class="mt-2 text-xs"></div><div class="font-bold mt-2 text-sm">Total: GH₵<span id="tot">0</span></div></div>
+<div class="bg-zinc-900 rounded-xl p-3">
+<h3 class="font-bold text-sm mb-2">🤖 AI Assistant</h3>
+<textarea id="aiInput" class="w-full bg-black border border-zinc-800 rounded-lg p-2 text-sm h-24" placeholder="Ask about XAUUSD, entry, SL..."></textarea>
+<button onclick="askAI()" class="mt-2 w-full bg-yellow-500 text-black font-bold py-2 rounded-lg text-sm">Ask AI</button>
+<div id="aiReply" class="mt-2 text-sm text-zinc-300"></div>
+</div>
+<div class="bg-zinc-900 rounded-xl p-3">
+<h3 class="font-bold text-sm mb-2">📓 Trading Journal</h3>
+<input id="pair" class="w-full bg-black border border-zinc-800 rounded p-2 text-sm mb-2" placeholder="Pair: XAUUSD">
+<input id="entry" class="w-full bg-black border border-zinc-800 rounded p-2 text-sm mb-2" placeholder="Entry: 2640">
+<input id="result" class="w-full bg-black border border-zinc-800 rounded p-2 text-sm mb-2" placeholder="Result: +$50 / -$20">
+<button onclick="saveTrade()" class="w-full bg-green-600 font-bold py-2 rounded-lg text-sm">Save Trade</button>
+<div id="journalList" class="mt-2 space-y-1 text-xs"></div>
+</div>
 </div>
 
-<div class="text-center text-[10px] text-zinc-600 p-3">TradingPro Ghana • Live Charts by TradingView • AI Powered</div>
+<div class="text-center p-4 text-[10px] text-zinc-500 border-t border-zinc-900 mt-2">
+💎 TradingPro Ghana - Diamond TP Brand - EST 2026<br>Contact: 0591990508
 </div>
 
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+</div>
 <script>
-new TradingView.widget({
-"autosize": true,
-"symbol": "OANDA:XAUUSD",
-"interval": "60",
-"timezone": "Africa/Accra",
-"theme": "dark",
-"style": "1",
-"locale": "en",
-"toolbar_bg": "#0a0a0a",
-"enable_publishing": false,
-"allow_symbol_change": true,
-"studies": ["Volume@tv-basicstudies","MAExp@tv-basicstudies"],
-"container_id": "tv"
-});
-let t=JSON.parse(localStorage.getItem('jlive')||'[]');function r(){let s=0;document.getElementById('j').innerHTML=t.slice(-5).map(v=>{s+=v.p;return `<div class="flex justify-between bg-black p-1 rounded mt-1"><span>${v.a}</span><span class="${v.p>=0?'text-green-400':'text-red-400'}">GH₵${v.p}</span></div>`}).join('');document.getElementById('tot').innerText=s;localStorage.setItem('jlive',JSON.stringify(t));}r();function ad(){let a=document.getElementById('pair').value;let p=parseFloat(document.getElementById('pnl').value);if(isNaN(p))return;t.push({a:a,p:p});r();}function ask(){let m=document.getElementById('msg').value;if(!m)return;let c=document.getElementById('chat');c.innerHTML+=`<div class="mt-2"><b>You:</b> ${m}</div>`;let ans=m.toLowerCase().includes('buy')||m.toLowerCase().includes('sell')?'Looking at LIVE XAUUSD chart now: Price is near 4340 resistance. Wait for breakout close above. If rejects, SELL to 4280 SL 4360. Risk 2% only!':'This live chart shows XAUUSD bullish structure. Use support/resistance + 2% risk rule. Journal your trade!';c.innerHTML+=`<div class="mt-1 text-yellow-400"><b>AI:</b> ${ans}</div>`;c.scrollTop=c.scrollHeight;document.getElementById('msg').value='';}
-</script></body></html>
+new TradingView.widget({"autosize":true,"symbol":"OANDA:XAUUSD","interval":"15","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en","enable_publishing":false,"allow_symbol_change":true,"container_id":"tv"});
+function askAI(){
+let q=document.getElementById('aiInput').value;
+if(!q) return;
+document.getElementById('aiReply').innerHTML="Thinking... 💎";
+setTimeout(()=>{document.getElementById('aiReply').innerHTML="💡 <b>TradingPro AI:</b><br>For "+q+" - Wait for BOS, risk 1-2%, SL behind structure. Don't chase! Diamond hands = diamond profits!";},1000);
+}
+function saveTrade(){
+let p=document.getElementById('pair').value;
+let e=document.getElementById('entry').value;
+let r=document.getElementById('result').value;
+if(!p) return;
+let div=document.createElement('div');
+div.className="bg-black p-2 rounded border border-zinc-800";
+div.innerHTML="<b>"+p+"</b> @ "+e+" => "+r;
+document.getElementById('journalList').prepend(div);
+document.getElementById('pair').value="";document.getElementById('entry').value="";document.getElementById('result').value="";
+}
+</script>
+</body>
+</html>
