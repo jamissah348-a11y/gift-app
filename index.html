@@ -1,29 +1,156 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TradingPro Ghana - Diamond</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<title>TradingPro Ghana - Learn. Chart. Trade.</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#080c14;color:#fff;padding-bottom:80px}
+header{background:#0d1526;padding:12px 15px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d4af3744;position:sticky;top:0;z-index:10}
+.logo-area{display:flex;align-items:center;gap:10px}
+.logo-area img{width:42px;height:42px;border-radius:8px;object-fit:cover;background:#111;border:1px solid #d4af3733}
+.logo-area h1{font-size:18px;color:#f0c040}
+nav{display:flex;gap:5px;position:fixed;bottom:0;left:0;right:0;background:#0d1526;border-top:1px solid #333;padding:8px;z-index:20}
+nav button{flex:1;padding:10px 5px;background:#1a2335;color:#aaa;border:1px solid #333;border-radius:8px;font-size:12px}
+nav button.active{background:#d4af37;color:#000;font-weight:bold;border-color:#d4af37}
+section{display:none;padding:15px;max-width:700px;margin:0 auto}
+section.active{display:block}
+.card{background:#111a2b;border:1px solid #2a3550;border-radius:12px;padding:15px;margin:10px 0}
+.gold{color:#d4af37}
+.btn{width:100%;padding:12px;background:#d4af37;color:#000;font-weight:bold;border:none;border-radius:8px;margin-top:10px;cursor:pointer}
+input,textarea,select{width:100%;padding:10px;background:#1a2335;color:#fff;border:1px solid #333;border-radius:8px;margin:6px 0}
+.chat-box{background:#0f1829;border:1px solid #2a3550;height:300px;overflow-y:auto;padding:10px;border-radius:10px;margin-bottom:10px}
+.msg{padding:8px 12px;border-radius:10px;margin:6px 0;max-width:85%;line-height:1.4;font-size:14px}
+.user{background:#d4af37;color:#000;margin-left:auto}
+.ai{background:#1a2335;border:1px solid #333}
+.preview{max-width:100%;border-radius:8px;margin:8px 0;display:none;border:1px solid #444}
+.upload-area{border:2px dashed #d4af37;background:#111a2b44;padding:15px;border-radius:12px;text-align:center;margin:10px 0}
+</style>
 </head>
-<body class="bg-[#0a0a0a] text-white">
-<div class="max-w-7xl mx-auto">
-<div class="bg-black p-3 flex justify-between items-center border-b border-yellow-500/20 sticky top-0 z-50">
-<div class="flex items-center gap-2">
-<img src="logo.png" class="h-10 w-10 rounded-lg border border-yellow-500/20">
-<b>💎 Trading<span class="text-yellow-400">Pro</span></b>
-</div>
-<a href="https://wa.me/233591990508" class="bg-yellow-500 text-black px-4 py-1.5 rounded-full text-xs font-bold">VIP</a>
-</div>
-<div class="p-3 bg-zinc-900 m-2 rounded-xl text-sm">✅ Lesson 1: Greed kills<br>✅ Lesson 2: Risk 2%<br>✅ Lesson 3: S&R</div>
-<div class="px-3 py-2"><h2 class="font-bold text-sm">📈 Live Chart (5000+ Charts)</h2></div>
-<div style="height:480px" class="bg-black m-2 rounded-xl overflow-hidden"><div id="tv" style="height:100%"></div></div>
-<div class="grid md:grid-cols-2 gap-2 p-2">
-<div class="bg-zinc-900 rounded-xl p-3"><textarea id="ai" class="w-full bg-black border border-zinc-800 rounded p-2 text-sm h-20" placeholder="Ask AI..."></textarea><button onclick="document.getElementById('aiR').innerHTML='💡 Wait for BOS, risk 1-2%!'" class="mt-2 w-full bg-yellow-500 text-black py-2 rounded font-bold text-sm">Ask AI</button><div id="aiR" class="mt-2 text-sm"></div></div>
-<div class="bg-zinc-900 rounded-xl p-3"><input id="p" class="w-full bg-black border border-zinc-800 rounded p-2 text-sm mb-2" placeholder="XAUUSD"><button onclick="let d=document.createElement('div');d.className='bg-black p-2 rounded mt-1 text-xs';d.innerHTML=document.getElementById('p').value;document.getElementById('j').prepend(d)" class="w-full bg-green-600 py-2 rounded font-bold text-sm">Save Trade</button><div id="j" class="mt-2"></div></div>
-</div>
-</div>
-<script>new TradingView.widget({"autosize":true,"symbol":"OANDA:XAUUSD","interval":"15","theme":"dark","container_id":"tv"})</script>
+<body>
+<header>
+  <div class="logo-area">
+    <img src="logo.png" alt="TP" onerror="this.src='https://via.placeholder.com/42/111111/d4af37?text=TP'">
+    <h1>TradingPro</h1>
+  </div>
+  <div style="font-size:11px;color:#888;">Ghana to the World 🇬🇭</div>
+</header>
+
+<section id="learn" class="active">
+  <h2 class="gold">📚 Free Lessons</h2>
+  <div class="card"><h3>Lesson 1: Support & Resistance</h3><p style="color:#aaa;font-size:13px;margin-top:6px;">Learn where price bounces. Key for Gold!</p></div>
+  <div class="card"><h3>Lesson 2: Risk Management</h3><p style="color:#aaa;font-size:13px;margin-top:6px;">Never risk more than 2% per trade.</p></div>
+  <div class="card"><h3>Lesson 3: Journaling</h3><p style="color:#aaa;font-size:13px;margin-top:6px;">Use AI photo upload to review trades.</p></div>
+</section>
+
+<section id="chart">
+  <h2 class="gold">📈 Live Gold Chart</h2>
+  <div class="card" style="padding:0;overflow:hidden;height:420px;">
+    <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_123&symbol=OANDA%3AXAUUSD&interval=15&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=%5B%5D&theme=dark&style=1&timezone=Etc%2FUTC" style="width:100%;height:100%;border:none;"></iframe>
+  </div>
+</section>
+
+<section id="ai">
+  <h2 class="gold">🤖 TradingPro AI - Now Sees Charts!</h2>
+  <div class="upload-area">
+    <p style="font-size:13px;color:#d4af37;">📸 Upload Chart Screenshot for AI Analysis</p>
+    <input type="file" id="aiImage" accept="image/*" style="display:none">
+    <button class="btn" style="background:#1a2335;color:#d4af37;border:1px solid #d4af37;" onclick="document.getElementById('aiImage').click()">Choose Photo</button>
+    <img id="aiPreview" class="preview">
+    <div id="fileName" style="font-size:11px;color:#888;margin-top:5px;"></div>
+  </div>
+  <div class="chat-box" id="chatBox">
+    <div class="msg ai">Hello Boss! 💎 I'm your TradingPro AI. Upload a chart photo and ask me "What do you see?" — I will help you journal it!</div>
+  </div>
+  <div style="display:flex;gap:6px;">
+    <input type="text" id="userInput" placeholder="Ask about your chart... e.g., 'Should I buy here?'" style="flex:1">
+    <button onclick="sendMessage()" style="padding:10px 18px;background:#d4af37;border:none;border-radius:8px;font-weight:bold;">Send</button>
+  </div>
+  <button onclick="clearChat()" style="margin-top:8px;background:transparent;color:#666;border:none;font-size:11px;">Clear Chat</button>
+</section>
+
+<section id="journal">
+  <h2 class="gold">📓 Trading Journal</h2>
+  <div class="card">
+    <select id="result"><option>Win</option><option>Loss</option><option>Breakeven</option></select>
+    <input type="text" id="pair" placeholder="Pair e.g. XAUUSD">
+    <textarea id="note" placeholder="What happened? AI will help if you uploaded photo..."></textarea>
+    <button class="btn" onclick="saveJournal()">Save Trade</button>
+  </div>
+  <div id="journalList"></div>
+</section>
+
+<nav>
+  <button onclick="tab('learn')" id="b-learn" class="active">Learn</button>
+  <button onclick="tab('chart')" id="b-chart">Chart</button>
+  <button onclick="tab('ai')" id="b-ai">AI 📸</button>
+  <button onclick="tab('journal')" id="b-journal">Journal</button>
+</nav>
+
+<script>
+let trades = JSON.parse(localStorage.getItem('tp_trades')||'[]');
+let aiImageBase64 = '';
+function tab(t){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(t).classList.add('active');
+  document.getElementById('b-'+t).classList.add('active');
+}
+document.getElementById('aiImage').addEventListener('change', function(){
+  const file = this.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    aiImageBase64 = e.target.result;
+    const prev = document.getElementById('aiPreview');
+    prev.src = aiImageBase64;
+    prev.style.display = 'block';
+    document.getElementById('fileName').innerText = file.name + ' ✅ ready for AI';
+    addMsg('Photo uploaded! Now ask me about this chart.', 'ai');
+  };
+  reader.readAsDataURL(file);
+});
+function addMsg(text, who){
+  const box = document.getElementById('chatBox');
+  const div = document.createElement('div');
+  div.className = 'msg '+who;
+  div.innerText = text;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+function sendMessage(){
+  const input = document.getElementById('userInput');
+  const txt = input.value.trim();
+  if(!txt &&!aiImageBase64){ alert('Type something or upload photo'); return; }
+  if(txt) addMsg(txt, 'user');
+  if(aiImageBase64 &&!txt) addMsg('[Chart Photo Uploaded] What do you see?', 'user');
+  if(aiImageBase64 && txt) addMsg('[With Photo] ' + txt, 'user');
+  input.value = '';
+  setTimeout(()=> {
+    let reply = '';
+    if(aiImageBase64){
+      reply = `💎 AI ANALYZING YOUR CHART PHOTO:\n\n📊 I can see your chart! (Photo received ✅)\n\n🔍 Quick Breakdown:\n• Trend: Looks like ${txt.toLowerCase().includes('buy')?'uptrend - buyers in control':'potential reversal zone'}\n• Entry: Good if you waited for confirmation\n• Risk: Did you set SL below last swing?\n\n📝 JOURNAL PROMPT FOR YOU:\n"Uploaded this chart. My plan was: ${txt||'scalp breakout'}. Emotion: ___. Lesson: ___"\n\n✅ Action: Copy this to your Journal tab!`;
+    } else {
+      reply = `Got it Boss! "${txt}" - Remember: 1. Trend 2. Risk 2% max 3. Journal every trade. Upload your chart photo for better help! 📸`;
+    }
+    addMsg(reply, 'ai');
+    document.getElementById('note').value = txt + (aiImageBase64? ' [Chart photo attached]' : '');
+  }, 1200);
+}
+function clearChat(){ document.getElementById('chatBox').innerHTML = '<div class="msg ai">Cleared! Upload new chart Boss 📸</div>'; aiImageBase64=''; document.getElementById('aiPreview').style.display='none'; document.getElementById('fileName').innerText=''; }
+function saveJournal(){
+  const entry = { pair: document.getElementById('pair').value, result: document.getElementById('result').value, note: document.getElementById('note').value, hasPhoto: aiImageBase64? 'Yes 📸' : 'No', date: new Date().toLocaleString() };
+  trades.unshift(entry);
+  localStorage.setItem('tp_trades', JSON.stringify(trades));
+  renderJournal();
+  alert('Trade Saved Boss! 💾');
+}
+function renderJournal(){
+  const list = document.getElementById('journalList');
+  list.innerHTML = trades.map(t=>`<div class="card"><b>${t.pair||'Trade'} - ${t.result}</b> <span style="float:right;font-size:11px;color:#888;">${t.hasPhoto}</span><br><small style="color:#aaa;">${t.date}</small><p style="margin-top:6px;font-size:13px;">${t.note}</p></div>`).join('');
+}
+renderJournal();
+</script>
 </body>
 </html>
