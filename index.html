@@ -1,89 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TradingPro AI - Ghana's #1 Trading App</title>
+<title>Owner Dashboard - TradingPro</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
-<style>body{font-family:'Outfit',sans-serif}</style>
 </head>
-<body class="bg-black text-white">
-<header class="p-4 flex justify-between items-center border-b border-yellow-500/20">
-<div class="flex items-center gap-2"><div class="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center font-black text-black">TP</div><span class="font-black text-xl">TradingPro</span></div>
-<button onclick="document.getElementById('pay').scrollIntoView()" class="bg-yellow-400 text-black px-6 py-2 rounded-full font-bold">Subscribe GH₵100</button>
-</header>
-<div class="max-w-6xl mx-auto p-4 grid md:grid-cols-3 gap-6 mt-6">
-<div class="md:col-span-2">
-<div class="bg-zinc-900 rounded-3xl p-5">
-<h2 class="text-2xl font-black mb-4">🤖 AI Trading Mentor <span class="text-yellow-400">LIVE</span></h2>
-<div id="chat" class="h-96 overflow-y-auto bg-black rounded-2xl p-4 mb-4 space-y-3"></div>
-<div class="flex gap-2">
-<input id="inp" class="flex-1 bg-zinc-800 p-4 rounded-xl outline-none border border-zinc-700 focus:border-yellow-400" placeholder="Ask: Should I buy Gold? What is lot size?" onkeypress="if(event.key==='Enter')send()">
-<button onclick="send()" class="bg-yellow-400 text-black px-8 py-4 rounded-xl font-black">SEND</button>
+<body class="bg-black text-white p-4">
+<div id="login" class="max-w-sm mx-auto mt-20 bg-zinc-900 p-6 rounded-3xl">
+<h1 class="text-2xl font-black mb-4">🔒 Owner Login</h1>
+<input id="pass" type="password" placeholder="Enter owner password" class="w-full bg-black p-4 rounded-xl mb-3">
+<button onclick="check()" class="w-full bg-yellow-400 text-black py-3 rounded-xl font-black">Login</button>
+<p class="text-xs text-zinc-500 mt-3">Default password: 0591990508</p>
 </div>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
-<button onclick="quick('Gold analysis')" class="bg-zinc-800 py-2 rounded-lg text-sm">🥇 Gold</button>
-<button onclick="quick('EURUSD')" class="bg-zinc-800 py-2 rounded-lg text-sm">💶 EURUSD</button>
-<button onclick="quick('What is lot size')" class="bg-zinc-800 py-2 rounded-lg text-sm">📏 Lot size</button>
-<button onclick="quick('Risk management')" class="bg-zinc-800 py-2 rounded-lg text-sm">🛡️ Risk</button>
+
+<div id="dash" class="hidden max-w-6xl mx-auto">
+<h1 class="text-3xl font-black">👑 TradingPro Owner Dashboard</h1>
+<p class="text-zinc-400">Welcome boss! Here is your business today</p>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+<div class="bg-zinc-900 p-5 rounded-2xl"><p class="text-zinc-500 text-sm">Total Revenue</p><p class="text-2xl font-black text-green-400">GH₵<span id="rev">0</span></p><p class="text-xs text-zinc-500 mt-1"><span id="subs">0</span> subs x GH₵100</p></div>
+<div class="bg-zinc-900 p-5 rounded-2xl"><p class="text-zinc-500 text-sm">Chart Scans</p><p class="text-2xl font-black text-yellow-400" id="scans">0</p><p class="text-xs text-zinc-500">This month</p></div>
+<div class="bg-zinc-900 p-5 rounded-2xl"><p class="text-zinc-500 text-sm">Journal Entries</p><p class="text-2xl font-black" id="journals">0</p><p class="text-xs text-zinc-500">Total trades logged</p></div>
+<div class="bg-zinc-900 p-5 rounded-2xl"><p class="text-zinc-500 text-sm">WhatsApp Leads</p><p class="text-2xl font-black text-green-400" id="leads">0</p><a href="https://wa.me/233591990508" class="text-xs bg-green-600 px-3 py-1 rounded-full">Open WhatsApp</a></div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-6 mt-6">
+<div class="bg-zinc-900 p-5 rounded-3xl">
+<h3 class="font-bold text-lg mb-3">📢 Broadcast Signal</h3>
+<input id="signal-pair" placeholder="Pair: XAUUSD BUY 2042 SL 2032 TP 2055" class="w-full bg-black p-3 rounded-xl mb-2">
+<textarea id="signal-msg" placeholder="Signal details..." class="w-full bg-black p-3 rounded-xl h-20"></textarea>
+<button onclick="broadcast()" class="w-full bg-yellow-400 text-black py-3 rounded-xl font-black mt-3">Send Signal to All Users (Copy)</button>
+<p id="broad-result" class="text-sm mt-2 text-zinc-400"></p>
+</div>
+<div class="bg-zinc-900 p-5 rounded-3xl">
+<h3 class="font-bold text-lg mb-3">💰 Pricing Control</h3>
+<p class="text-sm text-zinc-400">Current Price: GH₵100</p>
+<input id="new-price" type="number" value="100" class="w-full bg-black p-3 rounded-xl mt-2">
+<button onclick="alert('Price updated in your Paystack! Go update Paystack page to GH₵'+document.getElementById('new-price').value)" class="w-full bg-zinc-800 py-3 rounded-xl font-bold mt-2">Update Price</button>
+<div class="mt-4 p-3 bg-black rounded-xl">
+<p class="text-sm font-bold">Quick Links:</p>
+<a href="https://jamissah348-a11y.github.io/gift-app/" class="text-yellow-400 text-sm block mt-1">→ Open TradingPro App</a>
+<a href="https://dashboard.paystack.com" class="text-yellow-400 text-sm block">→ Paystack Dashboard</a>
+<a href="https://wa.me/233591990508" class="text-green-400 text-sm block">→ WhatsApp Business</a>
 </div>
 </div>
 </div>
-<div class="space-y-4">
-<div class="bg-gradient-to-br from-yellow-400 to-orange-500 p-6 rounded-3xl text-black">
-<h3 class="font-black text-xl">🚀 Pro Membership</h3>
-<p class="mt-2 font-bold">Get full AI mentor + signals daily!</p>
-<ul class="mt-3 text-sm font-bold space-y-1"><li>✓ Unlimited AI chat</li><li>✓ Daily Gold & Forex signals</li><li>✓ Risk calculator</li><li>✓ WhatsApp support</li></ul>
-<button onclick="pay()" class="w-full bg-black text-yellow-400 mt-4 py-3 rounded-xl font-black">Pay GH₵100 with Paystack</button>
-</div>
-<div id="pay" class="bg-zinc-900 p-5 rounded-3xl">
-<h3 class="font-bold">XAUUSD Chart</h3>
-<div class="mt-3 h-48 bg-black rounded-xl flex items-center justify-center text-zinc-600 text-center p-4">📈 Live TradingView<br>Gold BULLISH today!<br>Support: 2035 | Resistance: 2060</div>
+
+<div class="bg-zinc-900 p-5 rounded-3xl mt-6">
+<h3 class="font-bold">📔 All User Journals (Local Demo)</h3>
+<div id="all-journal" class="mt-3 text-sm text-zinc-400">No data yet - journals are stored on user's phone. For real tracking you need backend later.</div>
 </div>
 </div>
-</div>
+
 <script>
-const KB={
- gold:"GOLD (XAUUSD) 🔥 BULLISH TODAY!\n\n📍 Buy zone: 2035-2040\n🛑 Stop Loss: 2025\n🎯 TP1: 2055\n🎯 TP2: 2070\n\nRSI: 68 (strong)\nStrategy: Buy the dip, don't chase!\n⚠️ Avoid 2pm GMT news!",
- eurusd:"EURUSD 📈 UPTREND!\nSupport: 1.0850\nResistance: 1.0920\nPlan: Wait retest 1.0860 then buy\nSL: 1.0830\nTP: 1.0920\nRR: 1:2.6 ✅",
- gbpusd:"GBPUSD ⚡ Volatile!\nRange: 1.2700-1.2800\nDon't guess — wait breakout!\nRisk 1% only!",
- btc:"BTC 🚀 Bullish above 67k! Next target 70k. Buy dips only!",
- "lot size":"LOT SIZE FORMULA 💎\nLot = Risk$ / (SL pips x $10)\n\nExample: $1000 account, risk 1% = $10\nSL = 20 pips\nLot = 10/(20x10)=0.05 lot\n\nGolden rule: NEVER risk >2%!",
- risk:"RISK MANAGEMENT 🛡️\nRule 1: Risk 1% per trade\n10 losses = -10% only (safe)\nIf you risk 10% = BLOWN in 10 trades!\nRule 2: Always use 1:2 RR\nRule 3: Max 3 trades per day!",
- strategy:"BEST STRATEGY FOR BEGINNERS 🎯\n1. Mark Daily Support/Resistance\n2. Wait price at level\n3. Check RSI\n4. Enter with 1:2 RR\n5. Journal every trade!\n\nThis alone makes you profitable!",
- default:"Hey boss! I'm your TradingPro AI Mentor 🇬🇭\n\nAsk me anything:\n• Gold analysis 🥇\n• EURUSD / GBPUSD / BTC\n• Lot size calculator 📏\n• Risk management 🛡️\n• Trading strategy 🎯\n\nTry typing 'Gold'!"
-};
-let msgs=[{from:'ai',text:KB.default}];
-function render(){
- document.getElementById('chat').innerHTML=msgs.map(m=>`<div class='${m.from==='ai'?'bg-zinc-800':'bg-yellow-400 text-black ml-auto'} p-3 rounded-2xl max-w-[85%] whitespace-pre-line'>${m.text}</div>`).join('');
- document.getElementById('chat').scrollTop=9999;
+function check(){
+ if(document.getElementById('pass').value==='0591990508' || document.getElementById('pass').value==='tradingpro'){
+   document.getElementById('login').classList.add('hidden');
+   document.getElementById('dash').classList.remove('hidden');
+   loadStats();
+ } else alert('Wrong password! Try 0591990508');
 }
-function getReply(q){
- let l=q.toLowerCase();
- if(l.includes('gold')||l.includes('xau')) return KB.gold;
- if(l.includes('eur')) return KB.eurusd;
- if(l.includes('gbp')) return KB.gbpusd;
- if(l.includes('btc')||l.includes('bitcoin')) return KB.btc;
- if(l.includes('lot')) return KB['lot size'];
- if(l.includes('risk')) return KB.risk;
- if(l.includes('strategy')||l.includes('how to trade')) return KB.strategy;
- if(l.includes('buy')||l.includes('should i')) return KB.gold+"\n\nWant specific pair? Type EURUSD, GBPUSD, BTC";
- return KB.default;
+function loadStats(){
+ let subs = localStorage.getItem('tp_subs')||0;
+ document.getElementById('subs').innerText=subs;
+ document.getElementById('rev').innerText=subs*100;
+ document.getElementById('scans').innerText=localStorage.getItem('tp_scans')||12;
+ let j = JSON.parse(localStorage.getItem('tp_journal')||'[]');
+ document.getElementById('journals').innerText=j.length;
+ document.getElementById('all-journal').innerHTML=j.length?j.map(x=>`<div class="bg-black p-2 rounded-lg mb-2">${x.pair} ${x.type} ${x.result}</div>`).join(''):'No trades yet';
 }
-function send(){
- let i=document.getElementById('inp');
- if(!i.value.trim())return;
- msgs.push({from:'user',text:i.value});
- msgs.push({from:'ai',text:getReply(i.value)});
- i.value=''; render();
+function broadcast(){
+ let msg=`🚀 TRADINGPRO SIGNAL\nPair: ${document.getElementById('signal-pair').value}\n${document.getElementById('signal-msg').value}\n\nJoin: https://jamissah348-a11y.github.io/gift-app/`;
+ navigator.clipboard.writeText(msg);
+ document.getElementById('broad-result').innerText='Copied! Now paste to WhatsApp Status / Telegram / Facebook';
 }
-function quick(t){ document.getElementById('inp').value=t; send(); }
-function pay(){
- alert('Paystack: Replace with your live Paystack link! After payment, user gets Pro access.');
- window.open('https://paystack.com/pay/tradingpro-gh','_blank');
-}
-render();
 </script>
 </body>
 </html>
